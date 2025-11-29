@@ -3,7 +3,7 @@ services:
   iris:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfhir/Dockerfile
     restart: always
     hostname: iris-fhir
     container_name: iris-fhir
