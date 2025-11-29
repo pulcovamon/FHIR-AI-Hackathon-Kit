@@ -6,11 +6,16 @@ WORKDIR /home/irisowner/irisdev
 
 # ensure build context files (merge.cpf, iris.script, src, etc.) are available in the builder stage
 COPY . .
+# sanity-check required config is present during build
+RUN test -f merge.cpf && test -f iris.script
+# debug listing to verify files are present in the expected path during build
+RUN ls -al /home/irisowner/irisdev && ls -al /home/irisowner/irisdev/*.cpf
 
 # copy all the source into container and run iris. also run a initial script
+USER ${ISC_PACKAGE_MGRUSER}
 RUN iris start IRIS && \
-    iris merge IRIS merge.cpf && \
-    iris session IRIS < iris.script && \
+    iris merge IRIS /home/irisowner/irisdev/merge.cpf && \
+    iris session IRIS < /home/irisowner/irisdev/iris.script && \
     iris stop IRIS quietly
 
 RUN sed -i -e 's|http://localhost:52773/crud/_spec|/fhirUI/irisfhir_swagger.json|g' /usr/irissys/csp/swagger-ui/index.html \
