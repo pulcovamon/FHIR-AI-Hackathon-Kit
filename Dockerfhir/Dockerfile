@@ -8,10 +8,9 @@ WORKDIR /home/irisowner/irisdev
 COPY . .
 
 # copy all the source into container and run iris. also run a initial script
-RUN --mount=type=bind,src=.,dst=. \
-    iris start IRIS && \
+RUN iris start IRIS && \
     iris merge IRIS merge.cpf && \
-	iris session IRIS < iris.script && \
+    iris session IRIS < iris.script && \
     iris stop IRIS quietly
 
 RUN sed -i -e 's|http://localhost:52773/crud/_spec|/fhirUI/irisfhir_swagger.json|g' /usr/irissys/csp/swagger-ui/index.html \
