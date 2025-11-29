@@ -4,6 +4,8 @@ FROM $IMAGE as builder
 WORKDIR /home/irisowner/irisdev
 #RUN chown ${ISC_PACKAGE_MGRUSER}:${ISC_PACKAGE_IRISGROUP} /opt/irisapp
 
+# ensure build context files (merge.cpf, iris.script, src, etc.) are available in the builder stage
+COPY . .
 
 # copy all the source into container and run iris. also run a initial script
 RUN --mount=type=bind,src=.,dst=. \
