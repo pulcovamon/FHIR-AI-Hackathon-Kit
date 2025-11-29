@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: iris-fhir
+    env: docker
+    plan: starter
+    dockerfilePath: Dockerfhir/Dockerfile
+    dockerContext: Dockerfhir
+    autoDeploy: true
+    healthCheckPath: /csp/healthshare/demo/fhir/r4/metadata
+    envVars:
+      - key: PORT
+        value: "52773"
+    disk:
+      name: iris-fhir-data
+      mountPath: /data
+      sizeGB: 1
