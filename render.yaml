@@ -4,16 +4,16 @@ services:
     env: docker
     plan: starter
 
-    dockerfilePath: Dockerfhir/Dockerfile
     dockerContext: Dockerfhir
+    dockerfilePath: Dockerfhir/Dockerfile
 
     autoDeploy: true
-
-    healthCheckPath: /csp/healthshare/demo/fhir/r4/metadata
 
     envVars:
       - key: PORT
         value: "52773"
+
+    healthCheckPath: /csp/healthshare/demo/fhir/r4/metadata
 
     disks:
       - name: iris-fhir-data
